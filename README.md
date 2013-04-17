@@ -60,3 +60,7 @@ It is quite similar to a unix pipe in that regard.
     $list = explode("\n", $json);
     $newList = array_map($transformJson, $list);
     $newJson = implode("\n", $newList);
+
+    // =>
+    // {"name": "Igor Wiedler"}
+    // {"name": "Beau Simensen"}
