@@ -37,10 +37,18 @@ class ComposeTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException InvalidArgumentException Argument 0 to compose() is not callable.
+     * @expectedException InvalidArgumentException
      */
     function testComposeWithInvalidArg() {
         compose('foo');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    function testComposeWithJustOneInvalidArg() {
+        $fn = function () {};
+        compose($fn, 'foo', $fn);
     }
 
     function testPipelineWithMultipleFuncs() {

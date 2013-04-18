@@ -4,19 +4,19 @@ namespace igorw;
 
 /** @api */
 function compose() {
-    $fns = func_get_args();
-    $prev = array_shift($fns);
-
-    if (!$prev) {
+    if (!func_num_args()) {
         throw new \InvalidArgumentException('You must provide at least one function to compose().');
     }
 
-    array_walk($fns, function ($fn, $i) {
+    foreach (func_get_args() as $i => $fn) {
         if (!is_callable($fn)) {
             throw new \InvalidArgumentException(
                 sprintf('Argument %d to compose() is not callable.', $i));
         }
-    });
+    }
+
+    $fns = func_get_args();
+    $prev = array_shift($fns);
 
     foreach ($fns as $fn) {
         $prev = function ($x) use ($fn, $prev) {
