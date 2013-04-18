@@ -36,6 +36,13 @@ class ComposeTest extends \PHPUnit_Framework_TestCase {
         $this->assertSame('bar(foo(a, b, c))', $composed('a', 'b', 'c'));
     }
 
+    /**
+     * @expectedException InvalidArgumentException Argument 0 to compose() is not callable.
+     */
+    function testComposeWithInvalidArg() {
+        compose('foo');
+    }
+
     function testPipelineWithMultipleFuncs() {
         $composed = pipeline(
             function ($x) { return "foo($x)"; },

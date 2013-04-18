@@ -11,6 +11,13 @@ function compose() {
         throw new \InvalidArgumentException('You must provide at least one function to compose().');
     }
 
+    array_walk($fns, function ($fn, $i) {
+        if (!is_callable($fn)) {
+            throw new \InvalidArgumentException(
+                sprintf('Argument %d to compose() is not callable.', $i));
+        }
+    });
+
     foreach ($fns as $fn) {
         $prev = function ($x) use ($fn, $prev) {
             $args = func_get_args();
