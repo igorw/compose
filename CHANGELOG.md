@@ -1,7 +1,7 @@
 CHANGELOG
 =========
 
-### 1.0.1 (2013-xx-xx)
+### 1.0.1 (2013-04-20)
 
   * Validate arguments as callable (@bsdlite)
 
