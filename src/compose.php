@@ -16,6 +16,11 @@ function compose() {
     }
 
     $fns = func_get_args();
+    $f = new \ReflectionFunction($fns[count($fns)-1]);
+    $args = implode(',', array_map(function ($p) {
+        return (($c = $p->getClass()) ? '\\'.$c->getName() : '').' $'.$p->getName();
+    }, $f->getParameters()));
+
     $prev = array_shift($fns);
 
     foreach ($fns as $fn) {
@@ -23,6 +28,8 @@ function compose() {
             $args = func_get_args();
             return $prev(compose\apply($fn, $args));
         };
+        $fnSrc = 'return function ('.$args.') use ($prev) { return call_user_func_array($prev, func_get_args());};';
+        $prev = eval($fnSrc);
     }
 
     return $prev;
