@@ -59,4 +59,19 @@ class ComposeTest extends \PHPUnit_Framework_TestCase {
         );
         $this->assertSame('baz(bar(foo(x)))', $composed('x'));
     }
+
+    function testComposeReflectTypeHints() {
+        $composed = compose(
+            function (Foo $x) { return $x; },
+            function (Foo $x, Bar $y) { return $x; }
+        );
+
+        $f = new \ReflectionFunction($composed);
+
+        $this->assertEquals('igorw\Foo', $f->getParameters()[0]->getClass()->getName());
+        $this->assertEquals('igorw\Bar', $f->getParameters()[1]->getClass()->getName());
+    }
 }
+
+class Foo {};
+class Bar {};
