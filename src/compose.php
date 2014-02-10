@@ -28,7 +28,7 @@ function compose() {
             $args = func_get_args();
             return $prev(compose\apply($fn, $args));
         };
-        $fnSrc = 'return function ('.$args.') use ($prev) { return call_user_func_array($prev, func_get_args());};';
+        $fnSrc = 'return function ('.$args.') use ($prev) { return igorw\compose\apply($prev, func_get_args());};';
         $prev = eval($fnSrc);
     }
 
